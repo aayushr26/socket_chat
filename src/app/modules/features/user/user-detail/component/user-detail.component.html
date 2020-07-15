@@ -1,0 +1,144 @@
+
+
+<div class="mat-card page-heading">
+  <h1 class="mat-title">Profile Overview</h1>
+  <div>
+    <button mat-stroked-button class="outline-btn" (click)="changeStatus('delete')">Delete</button>
+    <button mat-raised-button class="primary-btn" color="primary"
+      (click)="changeStatus(userDetail?.status == 'active'?'block':'active')">
+      {{userDetail?.status =='active' ? 'Block' : 'Active'}}</button>
+  </div>
+</div>
+
+<div class="info_data p-20">
+  <div class="row">
+    <div class="col-sm-3">
+      <figure class="upload_img">
+        <img [src]="(userDetail?.image)||DefaultUrl" alt="user-img">
+      </figure>
+    </div>
+
+    <div class="col-sm-9">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="info_single">
+            <div class="label"> Name</div>
+            <div class="value icon">
+              <span>{{userDetail | fullName | titlecase | checkNull  }}</span>
+              <span class="icon" [ngClass]="{'gender-m':userDetail?.gender=='male','gender-f':userDetail?.gender=='female','gender-o':userDetail?.gender=='others'}" matTooltip="{{ userDetail?.gender | titlecase}}"></span>            
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="info_single">
+            <div class="label"> User Name </div>
+            <div class="value">{{userDetail?.userName | checkNull}}</div>
+          </div>
+        </div>
+        
+        <div class="col-sm-5">
+          <div class="info_single">
+            <div class="label"> Email Address </div>
+            <div class="value icon">
+              <span>{{userDetail?.email | checkNull}}</span> 
+            <span class="icon" [ngClass]="{'verified': userDetail?.isEmailVerified && userDetail?.email,'notverified':  userDetail?.email && !userDetail?.isEmailVerified}" [matTooltip]="userDetail?.isEmailVerified && userDetail?.email ? 'Verified' : userDetail?.email ? 'Not-verified':''"
+            ></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="info_single">
+            <div class="label"> Mobile Number </div>
+            <div class="value icon">
+              <span>{{userDetail?.countryCode ? userDetail?.countryCode +'-'+ userDetail?.mobileNumber : 'N/A'}}</span>
+              <span class="icon" [ngClass]="{'verified': userDetail?.isMobileVerified && userDetail?.mobileNumber,'notverified':  userDetail?.mobileNumber && !userDetail?.isMobileVerified}" [matTooltip]="userDetail?.isMobileVerified && userDetail?.mobileNumber ? 'Verified' : userDetail?.mobileNumber ? 'Not-verified':''"  ></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="info_single">
+            <div class="label"> Birth Date </div>
+            <div class="value">{{ userDetail?.dob  | date | checkNull}}</div>
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="info_single">
+            <div class="label"> Account Created On </div>
+            <div class="value"> {{ userDetail?.createdAt  | date | checkNull }}</div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="info_single">
+            <div class="label"> Buddy Name</div>
+            <div class="value"> {{  userDetail?.buddy?.name | titlecase | checkNull}}</div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="info_single">
+            <div class="label">Snack </div>
+            <div class="value"> {{ userDetail?.buddy?.snack || 0}}</div>
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="info_single">
+            <div class="label">Happiness score </div>
+            <div class="value"> {{ userDetail?.buddy?.happiness || 0}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Tabs -->
+<div class="mat-card">
+<mat-tab-group animationDuration="0ms">
+
+  <!-- Posts -->
+  <mat-tab [label]="'Posts'">
+    <!--  +' '+userDetail?.post -->
+    <ng-template matTabContent>
+      <app-post-list [userId]="userID" [type]="'user'" (postCount)="updateCount($event)"></app-post-list>
+    </ng-template>
+  </mat-tab>
+
+  <!-- Friends -->
+  <mat-tab [label]="'Friends'">
+    <!-- +' ' + userDetail?.friend -->
+    <ng-template matTabContent>
+      <app-user-friend [userId]="userID" [type]="'friends'"></app-user-friend>
+    </ng-template>
+  </mat-tab>
+
+  <!-- Followers -->
+  <mat-tab [label]="'Followers'">
+    <ng-template matTabContent>
+      <app-user-friend [userId]="userID" ></app-user-friend>
+    </ng-template>
+  </mat-tab>
+
+  <!-- Following -->
+  <mat-tab [label]="'Following'">
+    <ng-template matTabContent>
+      <app-user-friend [userId]="userID" ></app-user-friend>
+    </ng-template>
+  </mat-tab>
+
+  <!-- Reported -->
+  <mat-tab [label]="'Reported'">
+    <!--  +' '+ userDetail?.report -->
+    <ng-template matTabContent>
+      <app-user-friend [userId]="userID" [type]="'reported'"></app-user-friend>
+    </ng-template>
+  </mat-tab>
+
+</mat-tab-group>
+</div>
+<!-- Tabs close -->

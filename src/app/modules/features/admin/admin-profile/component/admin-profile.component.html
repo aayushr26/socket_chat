@@ -1,0 +1,31 @@
+<div class="mat-card page-heading">
+  <div class="mat-title"> Admin Profile </div>
+</div>
+
+<div class="mat-card" >
+
+  <div class="row info_data">
+    <div class="col-sm-3">
+      <div class="img admin_img">
+        <!-- <vsn-data-loader *ngIf="isProfileCallInProgress"></vsn-data-loader> -->
+        <img [src]="(profileDetail?.image)|| DefaultUrl" alt="profile-photo">
+      </div>
+    </div>
+    <div class="col-sm-9">
+      <div class="row">
+
+        <div class="col-sm-4">
+          <div class="label">Name</div>
+          <div class="value">{{profileDetail?.name | titlecase | checkNull}}</div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="label">Email ID</div>
+          <div class="value">{{profileDetail?.email | checkNull}}</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,39 @@
+<div class="form_wrap">
+  <!-- logo -->
+  <div class="logo_blk">
+    <img [src]="logo" alt="logo" />
+  </div>
+  <!-- logo close -->
+
+  <div class="mat-h2 page-title">Sign In in order to Access the Panel</div>
+  <div class="mat-h3">Please enter your registered Email ID and password in order to continue</div>
+
+  <!-- form -->
+  <form [formGroup]="loginForm" (ngSubmit)="loginForm.valid&&login()" focusInvalidInput>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email Address</mat-label>
+      <input matInput autocomplete='off' required formControlName="email" (keydown.space)="$event.preventDefault()" [maxlength]="maxLengthEmail">
+      <mat-error>{{loginForm.controls['email'].errors | controlError:'Email' }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input matInput autocomplete='off' required formControlName="password" [type]="hide ? 'password' :'text'" [maxlength]="maxLength">
+      <mat-error>{{loginForm.controls['password'].errors | controlError:'Password' }}</mat-error>
+      <mat-icon matSuffix (click)="hide= !hide">{{hide ? 'visibility_off' :'visibility'}}</mat-icon>
+    </mat-form-field>
+
+    <div class="text-right">
+      <button mat-button type="button" class="forgor_password" (click)="forgotRoute()">
+        SIGNUP
+      </button>
+    </div>
+
+    <div class="btn_groups text-center m-t-15">
+      <button mat-raised-button type="submit" color="primary" class="primary-btn">Login</button>
+    </div>
+
+  </form>
+  <!-- form close -->
+</div>

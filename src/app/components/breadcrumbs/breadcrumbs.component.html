@@ -1,0 +1,53 @@
+<!-- <ng-container *ngIf="data?.length">
+    <div class="breadcrumb">
+        <span [routerLink]="['/']"> Dashboard </span>
+        <mat-icon>keyboard_arrow_right</mat-icon>
+        <ng-container *ngFor="let link of data">
+            <span [routerLink]="link?.path"> {{link?.label}} </span>
+            <mat-icon>keyboard_arrow_right</mat-icon>
+        </ng-container>
+    </div>
+</ng-container> -->
+
+
+
+
+<!-- <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <ng-container *ngIf="!count">
+            <li class="breadcrumb-item"><i class="material-icons">home</i></li>
+        </ng-container>
+
+        <ng-container *ngIf="count">
+            <li class="breadcrumb-item"><a href="javascript:void(0)" routerLink="/"><i
+                        class="material-icons">home</i></a></li>
+        </ng-container>
+
+        <ng-container *ngFor="let breadLink of breadcrumbList">
+            <li *ngIf="breadLink" class="breadcrumb-item"><a href="javascript:void(0)" routerLink="{{ breadcrumbList[1].toUpperCase()   | absolutePath }}">/ {{breadLink + ' '}} </a>
+            </li>
+            
+        </ng-container>
+    </ol>
+</nav> -->
+
+
+
+<div *ngIf="finalSteps?.length" class="p-b-20">
+<a  href="javascript:void(0)" routerLink="/" routerLinkActive="disabled" [routerLinkActiveOptions]="{exact: true}"
+    class="header-link">Dashboard</a>
+<ng-container *ngFor="let step of finalSteps;let i = index">
+    <ng-container *ngIf="step?.label!==''">
+        <mat-icon class="bread-crumb-icon">chevron_right</mat-icon>
+        <a href="javascript:void(0)" [routerLink]="step?.url" [queryParams]="step?.queryParams"
+            *ngIf="i!==finalSteps.length-1" routerLinkActive="disabled" [routerLinkActiveOptions]="{exact: true}"
+            class="header-link">{{step?.label}}</a>
+
+        <!-- Last Value -->
+        <ng-container *ngIf="i===finalSteps.length-1">
+            <span class="active-breadcrumb">{{step?.label?.length == 24 ? 'Detail' : step?.label}}</span>
+        </ng-container>
+
+    </ng-container>
+</ng-container>
+</div>

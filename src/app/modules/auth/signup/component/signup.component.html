@@ -1,0 +1,43 @@
+<div class="form_wrap">
+    <!-- logo -->
+    <div class="logo_blk">
+      <img [src]="logo" alt="logo" />
+    </div>
+    <!-- logo close -->
+  
+    <div class="mat-h2 page-title">Sign Up</div>
+    
+    <!-- form -->
+    <form [formGroup]="signupForm" (ngSubmit)="login()" focusInvalidInput>
+        <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput autocomplete='off' required formControlName="name"  [maxlength]="maxLengthEmail">
+            <mat-error>{{signupForm?.controls['name'].errors | controlError:'Name' }}</mat-error>
+          </mat-form-field>
+      
+        <mat-form-field appearance="outline">
+        <mat-label>Email Address</mat-label>
+        <input matInput autocomplete='off' required formControlName="email" (keydown.space)="$event.preventDefault()" [maxlength]="maxLengthEmail">
+        <mat-error>{{signupForm?.controls['email'].errors | controlError:'Email' }}</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput autocomplete='off' required formControlName="password" [type]="hide ? 'password' :'text'" [maxlength]="maxLength">
+        <mat-error>{{signupForm?.controls['password'].errors | controlError:'Password' }}</mat-error>
+        <mat-icon matSuffix (click)="hide= !hide">{{hide ? 'visibility_off' :'visibility'}}</mat-icon>
+      </mat-form-field>
+  
+      <div class="text-right">
+        <button mat-button type="button" class="forgor_password" [routerLink]="['LOGIN' | absolutePath ]">
+          Log In
+        </button>
+      </div>
+  
+      <div class="btn_groups text-center m-t-15">
+        <button mat-raised-button type="submit" color="primary" class="primary-btn">Signup</button>
+      </div>
+  
+    </form>
+    <!-- form close -->
+  </div>

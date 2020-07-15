@@ -1,0 +1,31 @@
+<div class="form_wrap">
+
+    <!-- logo -->
+    <div class="logo_blk">
+        <img [src]="logo" alt="logo" />
+    </div>
+    <!-- logo close -->
+
+
+    <div class="mat-h2 page-title">We just sent you a verification link</div>
+    <div class="mat-h3">Click on the link and reset access to your account</div>
+
+    
+    <div class="mat-h3">
+        <span>{{email}}</span>
+        <a [routerLink]="['FORGOT_PASSWORD' | absolutePath]" routerLinkActive="active">
+            <mat-icon class="edit">border_color</mat-icon>
+        </a>
+    </div>
+
+    <div class="mat-h3">If you don't see our email in your inbox, check your spam folder.</div>
+    
+    <div class="btn_groups text-center m-t-15">
+        <button mat-button class="forgor_password" [routerLink]="'LOGIN'|absolutePath">
+            Login
+        </button>
+        <button mat-raised-button color="primary" class="primary-btn" [disabled]="resendButton" (click)="resend()">
+            <span class="timer resend" *ngIf="timer !== '00:00'">{{timer}}</span> <span class="resend"> Resend  </span>
+        </button>
+    </div>
+</div>

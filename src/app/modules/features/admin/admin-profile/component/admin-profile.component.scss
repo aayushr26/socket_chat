@@ -1,0 +1,16 @@
+@import '../../../../../../sass/grid';
+@import '../../../../../../sass/mix';
+@include page-heading;
+@include info_data;
+@include img(200px, 200px, cover, 3px);
+@include form-btn(center); 
+
+@media (max-width: 567px){
+    .col-sm-6{
+        max-width: 50%;
+    }
+}
+
+.form-btn{
+    border-top: none;
+}

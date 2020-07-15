@@ -1,0 +1,283 @@
+<div class="mat-card">
+
+
+  <div class="search-header-box" [ngClass]="type !='reported'?'flex-end':''">
+    <!-- Search field -->
+    <app-search-filter *ngIf="type ==='reported'" [placeholder]="'Search by username and name'"
+      (setSearch)="setSearch($event)"></app-search-filter>
+
+    <!--Filter Button  -->
+    <div class="filter-icons" *ngIf="type !=='dashboard'">
+      <button mat-fab color="primary" matTooltip="Filter" (click)="isFilterOpen = !isFilterOpen">
+        <mat-icon>filter_list</mat-icon>
+      </button>
+    </div>
+  </div>
+
+
+  <mat-expansion-panel [expanded]="isFilterOpen">
+    <div class="filter" [formGroup]="filterForm">
+      <div class="row">
+
+        <!-- Reported (Reported listing) -->
+        <div class="col-sm-3" *ngIf="type =='reported'">
+          <mat-form-field appearance="outline">
+            <mat-label>Reported</mat-label>
+            <mat-select formControlName="reported">
+              <mat-option *ngFor="let stat of  filterObject?.reportedFilter" [value]="stat.value">{{stat.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <!-- Post type -->
+        <div class="col-sm-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Post Type</mat-label>
+            <mat-select formControlName="postType">
+              <mat-option *ngFor="let stat of  filterObject?.postTypeFilter" [value]="stat.value">{{stat.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <!-- <div class="col-sm-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Mood</mat-label>
+            <mat-select formControlName="mood" (selectionChange)="setMood($event)">
+              <mat-select-trigger>
+                <mat-icon>{{selected}}</mat-icon>
+              </mat-select-trigger>
+              <mat-option value="1" class="mood-option">
+                <mat-checkbox>
+                  <mat-icon>mood_bad</mat-icon>
+                </mat-checkbox>
+                <img src="../../../../../../assets/images/angry.svg" alt="mood-img" />
+              </mat-option>
+              <mat-option value="2" class="mood-option">
+                <mat-checkbox>
+                  <mat-icon>sentiment_very_dissatisfied</mat-icon>
+                </mat-checkbox>
+                <img src="../../../../../../assets/images/vsad.svg" alt="mood-img" />
+              </mat-option>
+              <mat-option value="3" class="mood-option">
+                <mat-checkbox>
+                  <mat-icon>sentiment_dissatisfied</mat-icon>
+                </mat-checkbox>
+                <img src="../../../../../../assets/images/sad.svg" alt="mood-img" />
+              </mat-option>
+              <mat-option value="4" class="mood-option">
+                <mat-checkbox>
+                  <mat-icon>sentiment_satisfied</mat-icon>
+                </mat-checkbox>
+                <img src="../../../../../../assets/images/normal.svg" alt="mood-img" />
+              </mat-option>
+              <mat-option value="5" class="mood-option">
+                <mat-checkbox>
+                  <mat-icon>sentiment_satisfied_alt</mat-icon>
+                </mat-checkbox>
+                <img src="../../../../../../assets/images/happy.svg" alt="mood-img" />
+              </mat-option>
+              <mat-option value="6" class="mood-option">
+                <mat-checkbox>
+                  <mat-icon>sentiment_very_satisfied</mat-icon>
+                </mat-checkbox>
+                <img src="../../../../../../assets/images/vhappy.svg" alt="mood-img" />
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div> -->
+
+        <!-- Date Filter -->
+        <div class="col-sm-6">
+          <app-date-filter [dateObject]="listingDate">
+          </app-date-filter>
+        </div>
+
+        <!-- Status -->
+        <div class="col-sm-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+              <mat-option *ngFor="let stat of  filterObject?.statusFilter" [value]="stat.value">{{stat.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <!-- Sorting -->
+        <div class="col-sm-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Sorting</mat-label>
+            <mat-select formControlName="sorting">
+              <mat-option *ngFor="let stat of  sortingFilter" [value]="stat.value">{{stat.viewValue}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+
+
+        <div class="col-sm-12">
+          <div class="filtr-btn">
+            <button mat-stroked-button class="primary-btn outline-btn" type="reset"
+              (click)="resetFilter()">Reset</button>
+            <button mat-raised-button color="primary" class="primary-btn" type="button"
+              (click)="applyFilter()">Apply</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+
+  <div class="m-b-10">
+    <strong>Total Posts: </strong>{{total}}
+  </div>
+  <div class="table-wrapper">
+    <table mat-table [dataSource]="postList">
+
+      <!-- S.No -->
+      <ng-container matColumnDef="s.no">
+        <th mat-header-cell *matHeaderCellDef> Sr. No </th>
+        <td mat-cell *matCellDef="let post;let i = index;"> {{getSerialNumber(i+1)}}</td>
+      </ng-container>
+
+      <!-- Post Preview -->
+      <ng-container matColumnDef="postPreview">
+        <th mat-header-cell *matHeaderCellDef>Post Preview</th>
+        <td mat-cell *matCellDef="let post;">
+          <ul class="td-details cursor" [routerLink]="['POST_DETAIL' | absolutePath , post?._id]"
+            routerLinkActive="active">
+            <li class="icon "
+              [ngClass]="{'only-me':post?.visibility=='1','close-friends':post?.visibility=='2','friends':post?.visibility=='3','public':post?.visibility=='4'}">
+              <span>{{post?.visibility=='1'?'Only Me': post?.visibility=='2'?'Close Friends' : post?.visibility=='3' ? 'Friends':post?.visibility=='4'?'Public':''}}</span>
+            </li>
+            <li class="">
+              <span class="txt-post">
+                <strong matTooltip="Creation Date">{{post?.createdAt | date | checkNull}} </strong>
+                {{post?.content | checkNull}}</span>
+            </li>
+          </ul>
+        </td>
+      </ng-container>
+
+      <!-- Post Detail -->
+      <ng-container matColumnDef="postDetail">
+        <th mat-header-cell *matHeaderCellDef>Post Details</th>
+        <td mat-cell *matCellDef="let post;">
+          <ul class="td-details">
+            <li *ngIf="type !== 'user'" class="icon user">
+              <span matTooltip="Username">{{ post?.userName || post?.user?.userName }}</span>
+              <span class="icon"
+                [ngClass]="{'gender-m': post?.gender=='male' || post?.user?.gender=='male'  ,'gender-f': post?.gender=='female' || post?.user?.gender=='female','gender-o': post?.gender=='others' || post?.user?.gender=='others'}"
+                matTooltip="{{ post?.gender || post?.user?.gender  | titlecase}}"></span>
+            </li>
+            <!-- <li class="icon " [ngClass]="{'mood-vsad':post?.mood==1,'mood-sad':post?.mood==2,'mood-normal':post?.mood==3,'mood-happy':post?.mood==4,'mood-vhappy':post?.mood==5 || post?.mood==6}"><span>Mood</span></li> -->
+            <li class="icon post-date" ><span matTooltip="Gratitude Date">{{post?.gratituteDate | date | checkNull}}</span></li>
+          </ul>
+        </td>
+      </ng-container>
+
+      <!-- Total Likes -->
+      <ng-container matColumnDef="totalLikes">
+        <th mat-header-cell *matHeaderCellDef>Total Likes</th>
+        <td mat-cell *matCellDef="let post;">
+          <span>
+            {{post?.totalLikes | checkNull}}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Total dislikes -->
+      <ng-container matColumnDef="totalDislikes">
+        <th mat-header-cell *matHeaderCellDef>Total Dislikes</th>
+        <td mat-cell *matCellDef="let post;">
+          <span>
+            {{post?.totalDislikes | checkNull}}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Reported -->
+      <ng-container matColumnDef="reported">
+        <th mat-header-cell *matHeaderCellDef>Reported</th>
+        <td mat-cell *matCellDef="let post;">
+          <span>
+            {{post?.reported? 'Yes':'No'}}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Normal Reported (Reported Listing) -->
+      <ng-container matColumnDef="normal-reported">
+        <th mat-header-cell *matHeaderCellDef>Normal Reported</th>
+        <td mat-cell *matCellDef="let post;">
+          <span>
+            {{post?.normal}}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Emergency Reported (Reported listing) -->
+      <ng-container matColumnDef="emergency-reported">
+        <th mat-header-cell *matHeaderCellDef>Emergency Reported</th>
+        <td mat-cell *matCellDef="let post;">
+          <span>
+            {{post?.emergency}}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Status -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef class="center">Status</th>
+        <td mat-cell *matCellDef="let post;" class="center" [ngClass]="{'my-class': post?.status!=='active'}">
+          {{ post?.status == 'active' ? 'Active' : 'Blocked' }}
+        </td>
+      </ng-container>
+
+      <!-- Action -->
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let post;let i = index;">
+          <div class="action_btn">
+            <button mat-button matTooltip=" {{ post?.status =='active' ? 'Block' : 'Unblock' }}"
+              (click)="changeStatus(post?.status == 'active'?'block':'active',post?._id, i)">
+
+              <mat-icon [ngClass]="{'block': post?.status!=='active', 'unblock': post?.status =='active' }">
+                {{ post?.status == 'active' ? 'lock_open' : 'lock' }}</mat-icon>
+            </button>
+
+            <button mat-button matTooltip="Delete" (click)="changeStatus('delete',post?._id, i)">
+              <i class="material-icons delete">delete</i>
+            </button>
+
+            <!-- <button mat-button matTooltip=" {{ post?.status =='active' ? 'Allow alert' : 'Snooze alert' }}">
+            
+            <mat-icon [ngClass]="{'deny': post?.status!=='active', 'allow': post?.status =='active' }">
+              {{ post?.status == 'active' ? 'alarm_on' : 'alarm_off' }}</mat-icon>
+          </button> -->
+
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let post; columns: displayedColumns;">
+      </tr>
+    </table>
+
+    <!-- loader -->
+    <vsn-data-loader *ngIf="showLoader"></vsn-data-loader>
+    <!-- No records -->
+    <div *ngIf="postList?.data?.length==0 && !showLoader">
+      <div class="_tableNoData">{{noRecords}}</div>
+    </div>
+  </div>
+
+  <!-- Paginator -->
+  <mat-paginator *ngIf="postList?.data?.length" [length]="total" [pageIndex]="page-1" [pageSize]="pageSize"
+    [pageSizeOptions]="pageOptions" [showFirstLastButtons]="true" (page)="changePage($event)">
+  </mat-paginator>
+
+</div>

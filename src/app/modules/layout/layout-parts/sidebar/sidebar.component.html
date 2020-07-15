@@ -1,0 +1,67 @@
+<mat-nav-list *ngIf="!showSettingSidebar">
+
+ 
+
+  <a mat-list-item color="primary" [routerLink]="['CHAT' | absolutePath]" routerLinkActive="active"
+    (click)="reloadComponent('CHAT')">
+    <mat-icon>person</mat-icon> CHAT
+  </a>
+ 
+</mat-nav-list>
+
+
+<mat-nav-list *ngIf="showSettingSidebar">
+
+  <a mat-list-item color="primary" [routerLink]="['ADMIN_PROFILE' | absolutePath]" routerLinkActive="active">
+    <mat-icon>settings</mat-icon> Setting
+  </a>
+
+  <a mat-list-item color="primary" [routerLink]="['EDIT_PROFILE' | absolutePath]" routerLinkActive="active">
+    <mat-icon>edit</mat-icon> Edit Profile
+  </a>
+  <a mat-list-item color="primary" [routerLink]="['CHANGE_PASSWORD' | absolutePath]" routerLinkActive="active">
+    <mat-icon>lock</mat-icon> <span>Change Password</span>
+  </a>
+</mat-nav-list>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- THIS IS EXPANDABLE MENU USE WHEN NEEDED -->
+
+<!-- <mat-expansion-panel>
+  <mat-expansion-panel-header>
+      <mat-list-item matRipple >
+          <mat-icon>content_paste</mat-icon> <span> All Menu </span>
+      </mat-list-item>
+  </mat-expansion-panel-header>
+
+
+  <a mat-list-item [routerLink]="['MENUS' | absolutePath]" routerLinkActive="active" > 
+    <mat-icon>content_paste</mat-icon> Menus
+  </a>
+  <a mat-list-item [routerLink]="['RECOMMENDED' | absolutePath]" routerLinkActive="active" >
+    <mat-icon>swap_vert</mat-icon> Recommended
+  </a>
+  <a mat-list-item [routerLink]="['POPULAR' | absolutePath]" routerLinkActive="active" >
+    <mat-icon>star</mat-icon> Popular
+  </a>
+
+</mat-expansion-panel> -->

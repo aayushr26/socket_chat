@@ -1,0 +1,13 @@
+<div class="common_search">
+    <mat-form-field class="search_filter" appearance="outline">
+      <input type="text" appSpace autocomplete="off" matInput [placeholder]="placeholder" [formControl]="searchControl" (keyup.enter)="searchResult()" maxlength="150" #searchRef>
+        <span matSuffix>
+      <span *ngIf="searchRef.value.trim()" aria-label="Clear" (click)="resetSearch()">
+        <mat-icon>close</mat-icon>
+      </span>
+        <span (click)="searchResult()" class="icon">
+        <mat-icon>search</mat-icon>
+      </span>
+        </span>
+    </mat-form-field>
+</div>

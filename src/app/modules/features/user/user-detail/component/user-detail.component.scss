@@ -1,0 +1,36 @@
+@import "grid";
+@import "mix";
+@include info_data;
+@include page-heading;
+
+.info_single {
+    margin: 0 0 25px !important;
+}
+.my-class {
+    color: red;
+}
+
+.upload_img {
+    background: #fafafa;
+    width: 200px;
+    height: 200px;
+    display: block;
+    border-radius: 5px;
+    margin: 0 auto 20px;
+    overflow: hidden;
+    border: 1px solid #cccc;
+    position: relative;
+    img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover; 
+    }
+}
+
+.name {
+    color: black;
+}
+.name:hover {
+    color: #58afef;
+    cursor: pointer;
+}

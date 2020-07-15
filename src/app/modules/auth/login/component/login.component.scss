@@ -1,0 +1,16 @@
+@import 'mix';
+@include btn_groups;
+
+
+
+form {
+    margin-top: 25px;
+}
+
+.logo_blk {
+    img {
+        max-width: 100px;
+        margin: 0 auto 10px;
+        display: block;
+    }
+}

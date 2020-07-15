@@ -1,0 +1,64 @@
+<div class="list_wrapper">
+    <div class="chatButton">
+        <button mat-fab color="primary" type="button" *ngIf="!showSearch" (click)="showSearch=!showSearch">
+            <mat-icon>search</mat-icon>
+        </button>
+        <button mat-fab color="primary" type="button" *ngIf="!showAll && !showSearch "
+            (click)="getUserList();showAll=!showAll">All</button>
+        <button mat-fab color="primary" type="button" *ngIf="showAll && !showSearch"
+            (click)="getChattedUser(true);showAll=!showAll">Chats</button>
+        <button mat-button *ngIf="showSearch" type="button" color="primary"
+            (click)="getChattedUser(true);showSearch=!showSearch">
+            <mat-icon>trending_flat</mat-icon>
+        </button>
+    </div>
+    <div class="search" *ngIf="showSearch">
+        <app-search-filter [placeholder]="'Search by name'" (setSearch)="setSearch($event)"></app-search-filter>
+    </div>
+    <ul *ngIf="!showAll" class="post-list-wrap">
+        <li  *ngFor="let user of userList">
+            <!--  -->
+            <div class="profile-detail" (click)="openUser(user);">
+                <figure class="frnd-img">
+                    <img [src]=" user?.image ||  '../../../../../../assets/images/user.png'" alt="friend-img" />
+                </figure>
+                <div>
+
+                    <ul>
+                        <li>
+                            <p  class="name l-h m-l-5"  ><span [matBadge]="user?.unreadCount"  matBadgeOverlap="false">{{user?.name | titlecase | checkNull}}</span></p>
+                        </li>
+                        <li *ngIf="user?.msg?.trim()">
+                            <span  class="msg"> {{ user?.msg?.trim().length>20 ? user?.msg?.slice(0,20)+' ...' : user?.msg?.trim()  | checkNull}}<span class="time">{{ user?.time| date :'shortTime'}}</span></span>
+
+                        </li>
+                    </ul>
+                    <!-- user?.user | fullName | titlecase | checkNull -->
+                </div>
+            </div>
+        </li>
+    </ul>
+    <ul *ngIf="showAll" class="post-list-wrap">
+        <li  *ngFor="let user of allUserList">
+
+            <div class="profile-detail" (click)="openUser(user);showAll=!showAll">
+                <figure class="frnd-img">
+                    <img [src]=" user?.image ||  '../../../../../../assets/images/user.png'" alt="friend-img" />
+                </figure>
+                <div>
+
+                    <ul>
+                        <li>
+                            <p  class="name l-h m-l-5"  ><span [matBadge]="user?.unreadCount"  matBadgeOverlap="false">{{user?.name | titlecase | checkNull}}</span></p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <!-- loader -->
+    <!-- No data -->
+    <div *ngIf="userList?.length==0 && allUserList?.length==0 ">
+        <div class="_tableNoData">{{noRecords}}</div>
+    </div>
+</div>

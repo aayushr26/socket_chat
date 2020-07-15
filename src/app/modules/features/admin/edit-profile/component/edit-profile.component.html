@@ -1,0 +1,48 @@
+<div class="mat-card page-heading">
+  <div class="mat-title">Edit Profile</div>
+</div>
+
+<div class="mat-card">
+<form [formGroup]="editProfileForm" (ngSubmit)="editProfile()">
+    <div class="row">
+      <div class="col-sm-3">
+      <div class="img admin_img">
+        <img [src]="profilePicURL|| DefaultUrl" alt="">
+        <!-- <mat-spinner *ngIf="imgLoader" [diameter]="40"></mat-spinner> -->
+        <!-- <button type="button" class="btnupload" mat-mini-fab>
+          <mat-icon>cloud_upload</mat-icon>
+          <input type="file" accept="image/x-png,image/jpeg" (change)="onSelectFile($event)" matTooltip="Change Image" />
+        </button> -->
+
+
+        <label  for="upload_img" type="button" class="btnupload" mat-mini-fab>
+          <mat-icon>cloud_upload</mat-icon> 
+          <input type="file"  id="upload_img" accept="image/x-png,image/jpeg" (change)="onSelectFile($event)" matTooltip="Change Image"  style="display:none"/>
+        </label> 
+      </div>
+      </div>
+      <div class="col-md-9">
+        <div class="row admin-info">
+          <div class="col-sm-6">
+            <mat-form-field appearance="outline">
+              <mat-label>Name</mat-label>
+              <input matInput formControlName="name"  placeholder="Name">
+              <mat-error>{{getControl('name')|validate:'name'}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <input matInput placeholder="Email" formControlName="email" readonly>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </div>
+    </div>
+        <div class="form-btn">
+          <button mat-stroked-button [routerLink]="['SETTINGS'|absolutePath]" class="primary-btn outline-btn" type="button">Cancel</button>
+          <button mat-raised-button color="primary" class="primary-btn" type="submit">Update</button>
+        </div>
+      </form>
+    </div>

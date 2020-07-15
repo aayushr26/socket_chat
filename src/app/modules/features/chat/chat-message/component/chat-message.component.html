@@ -1,0 +1,61 @@
+<div class="chatWindow">
+    <div class="header">
+        <div class="profile-detail">
+            <figure *ngIf="userData" class="frnd-img">
+                <img [src]=" user?.image ||  '../../../../../../assets/images/user.png'" alt="friend-img" />
+            </figure>
+            <span>
+                <h2> {{userData?.name | titlecase}}</h2>
+            </span>
+            <span class="status" *ngIf="messageList?.length && !typing">({{status?'Online':'Last Seen:'+( lastSeen | date :'d/M/yy, h:mm a')}})</span>
+            <span class="status" *ngIf="messageList?.length && typing">{{typing?'typing..':''}}</span>
+
+            <div class="chatMenu">
+                <button mat-icon-button [matMenuTriggerFor]="menu" class="bg-color" aria-label="Example icon-button with a menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="clearChat('clear')">
+                      <!-- <mat-icon>dialpad</mat-icon> -->
+                      Clear Chat
+                    </button>
+                    <button mat-menu-item>
+                      <!-- <mat-icon>voicemail</mat-icon> -->
+                      Block
+                    </button>
+                  </mat-menu>
+            </div>
+        </div>
+    </div>
+
+    <div class="list">
+        <ul #scrollMe infiniteScroll [scrollWindow]="false"  [infiniteScrollDistance]="scrollDistance"
+        [infiniteScrollUpDistance]="scrollUpDistance"
+            (scrolledUp)="onScroll($event)">
+            <!-- [scrollTop]="messageList?.length===0  ?0:scrollMe?.scrollHeight" -->
+            <li *ngFor="let msg of messageList">
+                <p [ngClass]="{'right':msg?.sender==_utility?.getAdminId(),'left':msg?.sender==userData?._id}">
+                    <span>{{msg?.msg}}</span>
+                    <span class="time">{{msg?.time | date :'shortTime'}}</span>
+                </p>
+            </li>
+        </ul>
+        <div class="newMessage" *ngIf="messageList?.length">
+            <!-- <button mat-raised-button type="button" (click)="pagination()">Previous Message</button> -->
+            <button mat-fab type="button" color="primary" (click)="scrollBottom()">
+                <mat-icon>arrow_downward</mat-icon>
+            </button>
+        </div>
+        <div class="no_data" *ngIf="messageList?.length==0">
+            <div class="_tableNoData">{{noRecords}}</div>
+        </div>
+
+    </div>
+    <div class="messageBox">
+        <mat-form-field appearance="outline">
+            <input type="text" appSpace autocomplete="off" matInput placeholder="Enter Message..."
+                [formControl]="message" (keyup.enter)="message?.value && sendMessage()" maxlength="500">
+        </mat-form-field>
+    </div>
+    
+</div>

@@ -1,0 +1,62 @@
+@import 'grid';
+@import 'mix';
+@include page_heading;
+
+.notification_wrapper{
+    padding: 15px 0;
+}
+.notifications {
+    .notification-bell{
+        position: relative;
+        padding: 18px 30px;
+        border-bottom: 1px solid #e0e0e0;
+        &:last-child{
+            border: none;
+        }
+        p{
+            padding-left: 40px;
+            margin: 0;
+        }
+        .time{
+            padding: 10px 0 0 40px;
+            font-size: 14px;
+        }
+        &::before{
+            border: 1px solid #e6e6e6;
+            width: 35px;
+            height: 35px;
+            content: "";
+            border-radius: 5px;
+            position: absolute;
+            top: 45px;;
+            left: 20px;
+            transform: translateY(-50%);
+        }
+    }
+    ul{
+        padding: 0;
+    }
+}
+.material-icons{
+    font-size: 20px !important;
+}
+.notification-bell{
+    &:before{
+        background: url("../../../../../../src/assets/images/bell.svg") no-repeat center;
+        background-size: 21px;
+    }
+}
+.txt-unread{ 
+    font-weight: 500 !important;
+}
+.tools{
+    display: flex;
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    button{
+        padding: 0;
+    }
+}
+/***************** Admin Notification List close ************************/

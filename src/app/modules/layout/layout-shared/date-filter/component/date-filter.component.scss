@@ -1,0 +1,28 @@
+@import 'grid';
+@import 'mix';
+.mat-h4 {
+    font-weight: 500;
+    margin-top: 10px;
+}
+.custom-date-wrap{
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+
+    .mat-form-field-wrapper{
+        height: 58px !important;
+        padding: 5px 10px;
+    }
+}
+
+.mat-form-field-underline {
+    height: auto !important;
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding: 5px 10px;
+}
+
+.filtr-btn{
+    margin: 8px 0 0 7px;
+}

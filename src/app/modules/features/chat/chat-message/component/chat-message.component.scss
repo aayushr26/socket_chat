@@ -1,0 +1,120 @@
+// body{
+//     line-height: 2 !important;
+// }
+.chatWindow {
+    height: 100%;
+    // background-color: yellow;
+    width: auto;
+    position: relative;
+}
+
+.header {
+    height: 10%;
+    border-top: 0.5px solid black;
+    border-bottom: 0.5px solid black;
+}
+
+.list {
+    height: 500px;
+    ul {
+        max-height: 475px;
+        // background-color: grey;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        // overflow: auto;
+        // height: 100%;
+    }
+    // li{
+    //     display: block;
+    // }
+    // overflow: hidden;
+}
+// p{
+//     line-height: 2px !important;
+// }
+.left {
+    // float: left !important;
+    width: 95%;
+    // display: block;
+    background-color: rgb(209, 234, 250);
+
+    border-radius: 20px;
+    padding-left: 50px;
+    padding-right: 10px;
+    word-break: break-all;
+    height: auto;
+}
+.right {
+    border-radius: 50px;
+    background-color: rgb(226, 245, 181);
+
+    width: 95%;
+    word-break: break-all;
+    height: auto;
+
+    // color: white;
+    padding-right: 50px;
+    padding-left: 10px;
+    text-align: right;
+    // display: block !important;
+}
+.list_wrapper {
+    max-height: 460px;
+    // min-height: 460px;
+    // background-color: black;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.messageBox {
+    margin-top: 40px;
+}
+
+.time {
+    color: rgb(170, 170, 170);
+    margin-left: 30px;
+    font-size: smaller;
+}
+.material-icons {
+    color: white !important;
+}
+.newMessage {
+    position: absolute;
+    bottom: 0;
+    text-align: right;
+    right: 40px;
+}
+
+.status {
+    margin-left: 20px;
+    font-size: 13px;
+    color: green;
+}
+.bg-color{
+    background: #5c51d6;
+    position: absolute;
+    right: 23px;
+    top: 9px;
+}
+.chatMenu{
+    // text-align: right;
+    float: right;
+}
+._tableNoData {
+    text-align: center;
+      padding: 250px 15px 15px;
+      margin: 10px 0 30px;
+      font-size: 20px;
+      background: url(src/assets/default-image/no_data.svg) no-repeat #f9f9f9 center;
+      background-size: 180px!important;
+      background-position: 50% 50%!important;
+      background-repeat: no-repeat!important;
+      color: #93a1b5;
+      border-radius: 3px;
+      height: 100%;
+      white-space: pre-line;
+      p { margin: 0; }
+  }
+  .no_data{
+      height: 300px;
+  }

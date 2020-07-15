@@ -1,0 +1,34 @@
+<div class="mat-card page-heading">
+    <h1 class="mat-title">Chat Module</h1>
+</div>
+
+<!-- <div class="mat-card height">
+    <div class="row">
+
+        <div class="col-sm-3">
+
+            <div>
+                <app-user-list></app-user-list>
+            </div>
+        </div>
+
+        
+        <div class="col-sm-9">
+            <div class="mat-card post-detail-card">
+                <app-chat-message></app-chat-message>
+            </div>
+            
+
+        </div>
+    </div> -->
+
+    <div class="wrap" >
+        <div class="f-20">
+            <app-user-list (getUser)="getUser($event)"></app-user-list>
+        </div>
+        <div class="f-80">
+            <app-chat-message [userData]="userData" ></app-chat-message>
+        </div>
+        <!-- <vsn-data-loader *ngIf="!userData"></vsn-data-loader> -->
+
+    </div>

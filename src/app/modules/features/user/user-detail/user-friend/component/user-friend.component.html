@@ -1,0 +1,158 @@
+<div class="mat-card">
+
+
+  <div class="search-header-box cls">
+    <!-- Search Filter -->
+    <app-search-filter [placeholder]="'Search by username and name'" (setSearch)="setSearch($event)">
+    </app-search-filter>
+
+    <!-- Filter Button -->
+    <div class="filter-icons">
+      <button mat-fab color="primary" matTooltip="Filter" (click)="isFilterOpen = !isFilterOpen">
+        <mat-icon>filter_list</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Filter -->
+  <mat-expansion-panel [expanded]="isFilterOpen">
+    <div [formGroup]="filterForm" class="filter">
+      <div class="col-sm-3">
+
+        <!-- Sorting -->
+        <mat-form-field appearance="outline">
+          <mat-label>{{type==='reported'?'Sort by Reported On': 'Sort by Friends since'}}</mat-label>
+          <mat-select formControlName="sorting">
+            <mat-option *ngFor="let stat of  sortFilter" [value]="stat.value">{{stat.viewValue}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- Date -->
+      <div class="col-sm-6">
+        <app-date-filter [dateObject]="listingDate"></app-date-filter>
+      </div>
+
+      <!-- Button -->
+      <div class="filtr-btn">
+        <button mat-stroked-button class="primary-btn outline-btn" type="reset" (click)="resetFilter()">Reset</button>
+        <button mat-raised-button color="primary" class="primary-btn" type="button"
+          (click)="applyFilter()">Apply</button>
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+  <!-- Total -->
+  <div class="m-b-10">
+    <strong>Total Friends:</strong> {{total}}
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrapper">
+    <table mat-table [dataSource]="userList">
+      <!-- S.No -->
+      <ng-container matColumnDef="s.no">
+        <th mat-header-cell *matHeaderCellDef> S. No </th>
+        <td mat-cell *matCellDef="let user;let i = index;"> {{getSerialNumber(i+1)}}</td>
+      </ng-container>
+
+      <!-- Profile Image -->
+      <ng-container matColumnDef="profile">
+        <th mat-header-cell *matHeaderCellDef>Profile</th>
+        <td mat-cell *matCellDef="let user;">
+          <div class="profile-detail">
+            <figure class="frnd-img">
+              <img [src]=" user?.report?.complaint?.image ||  '../../../../../../../assets/images/user.png'"
+                alt="friend-img" />
+            </figure>
+            <div>
+              <span class="name">{{user?.report?.complaint | fullName | titlecase | checkNull}}</span>
+              <span>{{user?.report?.complaint?.userName | checkNull}}</span>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+      <!-- Profile Image -->
+      <ng-container matColumnDef="profile-friends">
+        <th mat-header-cell *matHeaderCellDef>Profile</th>
+        <td mat-cell *matCellDef="let user;">
+          <div class="profile-detail">
+            <figure class="frnd-img">
+              <img [src]=" user?.users?.friends?.image ||  '../../../../../../../assets/images/user.png'"
+                alt="friend-img" />
+            </figure>
+            <div>
+              <span class="name">{{user?.users?.friends | fullName | titlecase | checkNull}}</span>
+              <span>{{user?.users?.friends?.userName | checkNull}}</span>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Friends Since  -->
+      <ng-container matColumnDef="friend">
+        <th mat-header-cell *matHeaderCellDef>Friend Since</th>
+        <td mat-cell *matCellDef="let user;">
+          <span>
+            {{user?.users?.updatedAt | date | checkNull}}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Reported Since -->
+      <ng-container matColumnDef="reported">
+        <th mat-header-cell *matHeaderCellDef>Reported On</th>
+        <td mat-cell *matCellDef="let user;">
+          <span>
+            {{user?.report?.createdAt | date}}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Close friends 'Yes'/'No' -->
+      <ng-container matColumnDef="close-friends">
+        <th mat-header-cell *matHeaderCellDef class="center">Close Friends</th>
+        <td mat-cell *matCellDef="let user;" class="center">
+          {{ user?.users?.isCloseFriend ? 'Yes' : 'No'}}
+        </td>
+      </ng-container>
+
+      <!-- Action -->
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let user;let i = index;">
+          <div class="action_btn">
+            <!-- View profile -->
+            <button *ngIf="type==='reported'" mat-button matTooltip="View Profile"
+              (click)="openProfile(user?.report?.reporter)">
+              <i class="material-icons view">remove_red_eye</i>
+            </button>
+            <button *ngIf="type==='friends'" mat-button matTooltip="View Profile"
+              (click)="openProfile(user?.users?.friends?._id)">
+              <i class="material-icons view">remove_red_eye</i>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let user; columns: displayedColumns;">
+      </tr>
+    </table>
+    <!-- Table end -->
+
+
+    <!--  Loader -->
+    <vsn-data-loader *ngIf="showLoader"></vsn-data-loader>
+
+    <!-- No data -->
+    <div *ngIf="userList?.data?.length==0 && !showLoader">
+      <div class="_tableNoData">{{noRecord}}</div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <mat-paginator *ngIf="userList?.data?.length" [length]="total" [pageIndex]="page-1" [pageSize]="pageSize"
+    [pageSizeOptions]="pageOptions" [showFirstLastButtons]="true" (page)="changePage($event)">
+  </mat-paginator>
+</div>

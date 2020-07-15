@@ -1,0 +1,23 @@
+<header class="header_inr">
+  <div  routerLink="/" class="logo"> 
+    <img [src]="logo"  class="logo"/> Socket Chat v1.0
+    </div>
+ 
+  <div class="dropdown_menu" >
+      <!-- <button mat-icon-button [routerLink]="['ADMIN_NOTIFICATION' | absolutePath]"><mat-icon matBadge="15" matBadgeColor="primary">notifications</mat-icon></button> -->
+      <button class="setting_menu" mat-button  [matMenuTriggerFor]="menu">
+          <div class="inr_wrap">
+              <span class="name">{{profileDetail?.name | titlecase}}</span>
+              <mat-icon>keyboard_arrow_down</mat-icon>
+          </div>
+      </button>
+      <mat-menu #menu="matMenu" xPosition="before" class="menu">
+          <button class="drop-menu" mat-menu-item [routerLink]="['ADMIN_PROFILE' | absolutePath]" class="profile-img"> 
+             <mat-icon class="menu-icon">settings</mat-icon>
+             Setting </button>
+          <button class="drop-menu" mat-menu-item (click)="logout()" > <mat-icon class="menu-icon">power_settings_new</mat-icon> Logout </button>
+      </mat-menu>
+  </div>
+
+</header>
+  
