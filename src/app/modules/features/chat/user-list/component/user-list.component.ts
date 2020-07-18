@@ -129,13 +129,13 @@ export class UserListComponent extends Pagination implements OnInit {
     //   this.userList.forEach(function (el,index,array){
     //     if(user._id ===el._id){
     //       array.splice(index,1)
-    //       // debugger
+    //       // 
     //     }
     //   })
     // }
     // this.userList.unshift(user)
     // this.getChattedUser()
-    // debugger
+    // 
   }
   setSearch(event) {
     this.search = event;

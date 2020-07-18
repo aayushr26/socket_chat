@@ -2,7 +2,7 @@
     <div class="header">
         <div class="profile-detail">
             <figure *ngIf="userData" class="frnd-img">
-                <img [src]=" user?.image ||  '../../../../../../assets/images/user.png'" alt="friend-img" />
+                <img [src]=" userData?.image ||  '../../../../../../assets/images/user.png'" alt="friend-img" />
             </figure>
             <span>
                 <h2> {{userData?.name | titlecase}}</h2>
@@ -15,7 +15,7 @@
                     <mat-icon>more_vert</mat-icon>
                   </button>
                   <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="clearChat('clear')">
+                    <button mat-menu-item (click)="clearChat()">
                       <!-- <mat-icon>dialpad</mat-icon> -->
                       Clear Chat
                     </button>

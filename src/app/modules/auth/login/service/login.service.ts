@@ -36,7 +36,7 @@ export class LoginService {
         Method For Login
     */
     loginSuccess(data) {
-        // debugger
+        
         // localStorage.setItem('token', data['token']);
         // this._dataTransfer.profileData = data;
         // this._router.navigate([DASHBOARD]);

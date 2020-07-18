@@ -39,7 +39,7 @@ export class ChatMessageComponent implements OnInit, OnChanges {
         
         if (this.userData && (this.userData._id == message.receiver || this.userData._id == message.sender)) {
           this.messageList.push(message);
-          debugger
+          
           this.typing = false;
           setTimeout(() => { this.scrollBottom() }, 0);
         }
@@ -155,7 +155,7 @@ export class ChatMessageComponent implements OnInit, OnChanges {
       });
     }
   }
-  onScroll() {
+  onScroll(event) {
     console.log('----pagination----');
 
     this.pagination();

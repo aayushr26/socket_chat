@@ -59,5 +59,9 @@ export class VerifyOtpComponent implements OnInit {
     })
     // }
   }
+  onNoClick(): void {
+    this.dialogRef.close();
+
+  }
 }
 
