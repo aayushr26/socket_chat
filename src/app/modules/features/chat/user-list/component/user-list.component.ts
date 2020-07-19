@@ -23,6 +23,7 @@ export class UserListComponent extends Pagination implements OnInit {
   hideMsg: boolean;
   // showAll: boolean=true;
   allUserList: any[] = [];
+  activeUser: any;
   constructor(private _service: UserListService, private _socket: SocketService, private _utility: UtilityService, private _loaderService: LoaderService) {
     super()
     this.userId = this._utility.getAdminId();
@@ -37,7 +38,7 @@ export class UserListComponent extends Pagination implements OnInit {
         // console.log(message);
 
         // const found = this.userList.some(el => el._id === message.sender);
-        if (this.userList.length && !this.showAll ) {
+        if (this.userList.length && !this.showAll) {
           this.userList.forEach(function (el, index, array) {
             if (el._id === message.sender) {
               // el = message;
@@ -58,22 +59,22 @@ export class UserListComponent extends Pagination implements OnInit {
           // console.log(this.userList);
         }
         else {
-         if( message._id !== this.userId){
-          this.userList.unshift(message)
-          this.userEmit(message)
-         }
+          if (message._id !== this.userId) {
+            this.userList.unshift(message)
+            this.userEmit(message)
+          }
         }
 
       });
 
-      this._socket.listenDelete().subscribe(data=>{
-        this.userList.map(el=>{
-          if(el._id==data._id && data.success){
-            el.msg='',
-            el.time=''
-          }
-        })
+    this._socket.listenDelete().subscribe(data => {
+      this.userList.map(el => {
+        if (el._id == data._id && data.success) {
+          el.msg = '',
+            el.time = ''
+        }
       })
+    })
 
     this.getChattedUser();
   }
@@ -85,11 +86,11 @@ export class UserListComponent extends Pagination implements OnInit {
       // console.log(data);
       this.allUserList = [];
       this._loaderService.loader.next(false);
-      this.showAll =false;
+      this.showAll = false;
       this.userList = data['result']
       !data['result'].length ? this.noRecords = NO_RECORDS : '';
-      if(!notEmit)
-      this.userEmit(this.userList[0])
+      if (!notEmit)
+        this.userEmit(this.userList[0])
     })
   }
 
@@ -102,16 +103,16 @@ export class UserListComponent extends Pagination implements OnInit {
   }
 
   getUserList(notEmit?) {
-    this.userList=[]
+    // this.userList=[]
     let body = { ...this.validPageOptions };
     this._service.getUserList(body).subscribe(data => {
       // this.showMsg=false;
       // console.log(data.data['result']);
-      
+
       this.allUserList = data.data['result']
-      this.showAll=true;
+      this.showAll = true;
       // console.log(data.data['result'].length);
-      
+
       !data.data['result'].length ? this.noRecords = NO_RECORDS : '';
       // if (!notEmit) {
       //   this.userEmit(this.userList[0])
@@ -119,23 +120,23 @@ export class UserListComponent extends Pagination implements OnInit {
     })
   }
   userEmit(data) {
-    this.getUser.emit(data)
+    this.getUser.emit(data);
+    this.activeUser = data;
+
   }
-  openUser(user) {
+  openUser(user, i) {
     this.userEmit(user);
-    this.getChattedUser(true)
+    // this.getChattedUser(true)
+
 
     // if(this.userList.length){
-    //   this.userList.forEach(function (el,index,array){
-    //     if(user._id ===el._id){
-    //       array.splice(index,1)
-    //       // 
-    //     }
-    //   })
-    // }
-    // this.userList.unshift(user)
-    // this.getChattedUser()
-    // 
+    this.userList.forEach(function (el, index, array) {
+      if (user._id === el._id) {
+        array.splice(index, 1);
+      }
+    })
+    this.userList.unshift(user)
+
   }
   setSearch(event) {
     this.search = event;

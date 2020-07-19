@@ -1,16 +1,16 @@
 <div class="chatWindow">
-    <div class="header">
-        <div class="profile-detail">
-            <figure *ngIf="userData" class="frnd-img">
+    <div class="header" >
+        <div class="profile-detail" *ngIf="userData">
+            <figure  class="frnd-img">
                 <img [src]=" userData?.image ||  '../../../../../../assets/images/user.png'" alt="friend-img" />
             </figure>
             <span>
                 <h2> {{userData?.name | titlecase}}</h2>
             </span>
-            <span class="status" *ngIf="messageList?.length && !typing">({{status?'Online':'Last Seen:'+( lastSeen | date :'d/M/yy, h:mm a')}})</span>
-            <span class="status" *ngIf="messageList?.length && typing">{{typing?'typing..':''}}</span>
+            <span class="status" *ngIf=" !typing">({{status?'Online':'Last Seen:'+( lastSeen | date :'d/M/yy, h:mm a' | checkNull)}})</span>
+            <span class="status" *ngIf=" typing">{{typing?'typing..':''}}</span>
 
-            <div class="chatMenu">
+            <div class="chatMenu" >
                 <button mat-icon-button [matMenuTriggerFor]="menu" class="bg-color" aria-label="Example icon-button with a menu">
                     <mat-icon>more_vert</mat-icon>
                   </button>

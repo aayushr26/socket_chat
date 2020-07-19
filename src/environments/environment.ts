@@ -7,8 +7,8 @@ export const environment = {
   production: false,
 
   // url: 'http://brightsidedev.appskeeper.com/',  //dev
-  url: 'https://87808a26a525.ngrok.io/',
-  SOCKET_ENDPOINT: 'https://87808a26a525.ngrok.io',
+  url: 'https://774a5cd88914.ngrok.io/',
+  SOCKET_ENDPOINT: 'https://774a5cd88914.ngrok.io',
   config: {
     AWS_BUCKET: 'appinventiv-development',
     AWS_ACCESS_KEY: 'AKIA6DQMUBGGY6CUWRG4',

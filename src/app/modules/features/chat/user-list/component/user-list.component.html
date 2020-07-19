@@ -16,9 +16,9 @@
         <app-search-filter [placeholder]="'Search by name'" (setSearch)="setSearch($event)"></app-search-filter>
     </div>
     <ul *ngIf="!showAll" class="post-list-wrap">
-        <li  *ngFor="let user of userList">
+        <li *ngFor="let user of userList;let i=index">
             <!--  -->
-            <div class="profile-detail" (click)="openUser(user);">
+            <div class="profile-detail" (click)="openUser(user,i);">
                 <figure class="frnd-img">
                     <img [src]=" user?.image ||  '../../../../../../assets/images/user.png'" alt="friend-img" />
                 </figure>
@@ -26,10 +26,13 @@
 
                     <ul>
                         <li>
-                            <p  class="name l-h m-l-5"  ><span [matBadge]="user?.unreadCount"  matBadgeOverlap="false">{{user?.name | titlecase | checkNull}}</span></p>
+                            <p class="name l-h m-l-5"><span [matBadge]="user?.unreadCount"
+                                    matBadgeOverlap="false">{{user?.name | titlecase | checkNull}}</span></p>
                         </li>
                         <li *ngIf="user?.msg?.trim()">
-                            <span  class="msg"> {{ user?.msg?.trim().length>20 ? user?.msg?.slice(0,20)+' ...' : user?.msg?.trim()  | checkNull}}<span class="time">{{ user?.time| date :'shortTime'}}</span></span>
+                            <span class="msg">
+                                {{ user?.msg?.trim().length>20 ? user?.msg?.slice(0,20)+' ...' : user?.msg?.trim()  | checkNull}}<span
+                                    class="time">{{ user?.time| date :'shortTime'}}</span></span>
 
                         </li>
                     </ul>
@@ -39,9 +42,9 @@
         </li>
     </ul>
     <ul *ngIf="showAll" class="post-list-wrap">
-        <li  *ngFor="let user of allUserList">
+        <li *ngFor="let user of allUserList;let i=index">
 
-            <div class="profile-detail" (click)="openUser(user);showAll=!showAll">
+            <div class="profile-detail" (click)="openUser(user,i);showAll=!showAll">
                 <figure class="frnd-img">
                     <img [src]=" user?.image ||  '../../../../../../assets/images/user.png'" alt="friend-img" />
                 </figure>
@@ -49,7 +52,8 @@
 
                     <ul>
                         <li>
-                            <p  class="name l-h m-l-5"  ><span [matBadge]="user?.unreadCount"  matBadgeOverlap="false">{{user?.name | titlecase | checkNull}}</span></p>
+                            <p class="name l-h m-l-5"><span [matBadge]="user?.unreadCount"
+                                    matBadgeOverlap="false">{{user?.name | titlecase | checkNull}}</span></p>
                         </li>
                     </ul>
                 </div>

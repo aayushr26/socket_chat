@@ -38,6 +38,8 @@ export class ChatMessageComponent implements OnInit, OnChanges {
         console.log(this.messageList);
         
         if (this.userData && (this.userData._id == message.receiver || this.userData._id == message.sender)) {
+          console.log('hey');
+          
           this.messageList.push(message);
           
           this.typing = false;
@@ -115,7 +117,8 @@ export class ChatMessageComponent implements OnInit, OnChanges {
       this.lastSeen = !chat.isOnline ? chat.lastSeen : 0;
       if (chat && chat['result']) {
         let chatArray = chat['result'].reverse()
-        this.messageList.push(...chatArray)
+        // this.messageList.push(...chatArray)
+        this.messageList=chatArray
         this.noRecords = !this.messageList.length ? NO_RECORDS : '';
         this.typing = false;
         this._cd.detectChanges();
