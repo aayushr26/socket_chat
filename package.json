@@ -28,7 +28,7 @@
     "ngx-infinite-scroll": "^9.0.0",
     "rxjs": "~6.4.0",
     "sax": "^1.2.4",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
   },
